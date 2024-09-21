@@ -26,27 +26,29 @@
 <script lang='ts' setup>
 import { Lock, User } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+// import { useRoute, useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 //引入获取当前时间的函数
 import { getTime } from '../../utils/time'
 //引入用户相关的小仓库
-// import useUserStore from '../../store/modules/user'
+import useUserStore from '../../store/modules/user'
 
-// let useStore = useUserStore()
+let useStore = useUserStore()
 //获取el-form组件
 let loginForms = ref()
 //获取路由器
-let $router = useRouter()
-//路由对象
-let $route = useRoute()
+// let $router = useRouter()
+// //路由对象
+// let $route = useRoute()
 //定义变量控制按钮加载效果
 let loading = ref(false)
 //收集账号与密码的数据
-let loginForm = reactive({ username: 'admin', password: 'atguigu123' })
+let loginForm = reactive({ username: 'admin', password: '111111' })
 //登录按钮回调
 const login = async () => {
   //保证全部表单相校验通过再发请求
+  // console.log(loginForms.value);
+  
   await loginForms.value.validate()
   //加载效果:开始加载
   loading.value = true
@@ -56,16 +58,17 @@ const login = async () => {
   //请求失败->弹出登录失败信息
   try {
     //保证登录成功
-    // await useStore.userLogin(loginForm)
+    await useStore.userLogin(loginForm)
     //编程式导航跳转到展示数据首页
     //判断登录的时候,路由路径当中是否有query参数，如果有就往query参数挑战，没有跳转到首页
-    let redirect: any = $route.query.redirect
-    $router.push({ path: redirect || '/' })
+    // let redirect: any = $route.query.redirect
+    // $router.push({ path: redirect || '/' })
     //登录成功提示信息
     ElNotification({
       type: 'success',
       message: '欢迎回来',
-      title: `HI,${getTime()}好`,
+      // title: `HI,${getTime()}好`,
+      title: `HI,你好`,
     })
     //登录成功加载效果也消失
     loading.value = false
@@ -75,7 +78,8 @@ const login = async () => {
     //登录失败的提示信息
     ElNotification({
       type: 'error',
-      message: (error as Error).message,
+      // message: (error as Error).message,
+      message: "登录失败",
     })
   }
 }
