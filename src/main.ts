@@ -7,6 +7,8 @@ import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 import router from './router';
+// 引入pinia
+import pinia from "./store/index.ts"
 const app = createApp(App);
 app.use(ElementPlus, {
   locale: zhCn
@@ -18,4 +20,5 @@ import 'virtual:svg-icons-register';
 import gloablComponent from './components/index';
 import './styles/index.scss';
 app.use(gloablComponent);
+app.use(pinia);
 app.mount('#app')
